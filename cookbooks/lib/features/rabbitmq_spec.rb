@@ -8,6 +8,7 @@ end
 
 describe 'rabbitmq installation' do
   before :all do
+    sh('export HOME=/root')
     sh('sudo service rabbitmq-server start')
     tcpwait('127.0.0.1', 5672)
     sh("#{rmq.exe} declare queue " \
