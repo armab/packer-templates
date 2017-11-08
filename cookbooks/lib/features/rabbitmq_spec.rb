@@ -22,7 +22,11 @@ describe 'rabbitmq installation' do
   end
 
   describe 'rabbitmq commands', sudo: true do
-    describe service('rabbitmq-server'), sudo: true do
+    describe command('whoami') do
+      its(:stdout) { should match 'root' }
+    end
+
+    describe service('rabbitmq-server') do
       it { should be_running }
     end
 
