@@ -23,9 +23,25 @@ describe 'rabbitmq installation' do
 
   describe 'rabbitmq commands', sudo: true do
 
-    describe service('rabbitmq-server') do
+    describe command('whoami') do
+      its(:stdout) { should match 'root' }
+    end
+
+    describe command('whoami'), sudo: true do
+      its(:stdout) { should match 'root' }
+    end
+
+    describe command('whoami'), :sudo=>true do
+      its(:stdout) { should match 'root' }
+    end
+
+    describe command('whoami') do
       before { sh('sudo -i') }
       after { sh('su - travis') }
+      its(:stdout) { should match 'root' }
+    end
+
+    describe service('rabbitmq-server') do
       it { should be_running }
     end
 
