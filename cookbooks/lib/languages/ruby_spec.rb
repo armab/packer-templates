@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
-require 'features/ruby_interpreter_spec'
-require 'features/rvm_spec'
-
 describe 'ruby installation' do
   describe command('gem --version') do
     its(:stderr) { should be_empty }
-    its(:stdout) { should match(/^\d+\.\d+\.\d+/) }
+    its(:stdout) { should match(/^Rspec \d+\.\d+/) }
   end
 
   describe command('bundle --version') do

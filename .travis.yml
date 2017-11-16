@@ -44,9 +44,5 @@ script:
     jq . < $f &>/dev/null;
   done
 after_success:
-- if [[ $TRAVIS_JOB_BOARD_REGISTER_YML =~ garnet ]]; then
-    git fetch --unshallow;
-    bundle exec make packer-build-trigger;
-  else
-    echo 'no packer-build-trigger for you';
-  fi
+- export TRAVIS_COMMIT_RANGE='@...@'
+- bundle exec ./bin/packer-build-trigger -I ci-sardonyx.yml -I ci-opal.yml
