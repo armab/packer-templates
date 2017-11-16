@@ -34,6 +34,7 @@ TRAVIS_PACKER_BUILD ?= travis-packer-build
 UNZIP ?= unzip
 
 %: %.yml $(META_FILES)
+	bin/yml2json < $<
 	$(PACKER) build -only=$(BUILDER) <(bin/yml2json < $<)
 
 .PHONY: all
@@ -75,6 +76,7 @@ packer-build-trigger-all-ci:
 install-packer: tmp/packer.zip
 	mkdir -p ~/bin
 	$(UNZIP) -o -d ~/bin $<
+	mv ~/bin/packer_pr-5488_6ba4595a8 ~/bin/packer
 	chmod +x ~/bin/packer
 
 .PHONY: install-bats
@@ -86,7 +88,7 @@ update-gce-images:
 	bin/gce-image-update $$(git grep -lE 'source_image: ubuntu' *.yml)
 
 tmp/packer.zip:
-	$(CURL) -sSLo $@ 'https://releases.hashicorp.com/packer/1.1.0/packer_1.1.0_$(UNAME)_amd64.zip'
+	$(CURL) -sSLo $@ 'https://github.com/hashicorp/packer/files/1480109/packer_pr-5488_6ba4595a8.zip'
 
 tmp/bats/.git:
 	$(GIT) clone https://github.com/sstephenson/bats.git tmp/bats
