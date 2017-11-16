@@ -6,6 +6,9 @@ config:
   dist: trusty
   group: edge
   sudo: true
+  env:
+    matrix:
+      - BUILDER=docker
   before_install:
   - if [[ "${BUILDER}" = "docker" ]] ; then
       sudo apt-get update -yqq ;
