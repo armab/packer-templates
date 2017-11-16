@@ -6,6 +6,9 @@ config:
   dist: trusty
   group: edge
   sudo: true
+  env:
+    global:
+      - PACKER_LOG=1
   before_install:
   - if [[ "${BUILDER}" = "docker" ]] ; then
       sudo apt-get update -yqq ;
@@ -21,9 +24,3 @@ config:
   script:
   - export PACKER_TEMPLATES_BRANCH="%{branch}"
   - "./packer-templates/bin/packer-build-script %{template_name}"
-  addons:
-    artifacts:
-      paths:
-      - image-metadata-$(cat .packer-build-image-name).tar.bz2
-      target_paths:
-      - travis-ci/packer-templates/%{template_name}/$BUILDER
